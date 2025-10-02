@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNO Card Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Header -->
+        <header class="game-header">
+            <h1>🎴 UNO Game</h1>
+            <div class="game-info">
+                <div class="player-turn">Player 1's Turn</div>
+                <div class="cards-left">Cards in deck: <span id="deck-count">108</span></div>
+            </div>
+        </header>
+
+        <!-- Game Board -->
+        <main class="game-board">
+            <!-- Opponent's Hand (AI) -->
+            <div class="opponent-section">
+                <h3>Computer Player</h3>
+                <div class="opponent-hand">
+                    <div class="card-back-count">
+                        <span id="opponent-card-count">7</span> cards
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center Play Area -->
+            <div class="center-area">
+                <div class="deck-area">
+                    <div class="draw-pile" id="draw-pile">
+                        <div class="card card-back">DRAW</div>
+                    </div>
+                    <div class="discard-pile" id="discard-pile">
+                        <div class="card" id="current-card">
+                            <!-- Current card will be displayed here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Color Picker Modal -->
+                <div class="color-picker hidden" id="color-picker">
+                    <h3>Choose a color:</h3>
+                    <div class="color-options">
+                        <button class="color-btn red" data-color="red">Red</button>
+                        <button class="color-btn yellow" data-color="yellow">Yellow</button>
+                        <button class="color-btn green" data-color="green">Green</button>
+                        <button class="color-btn blue" data-color="blue">Blue</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Player's Hand -->
+            <div class="player-section">
+                <h3>Your Hand</h3>
+                <div class="player-hand" id="player-hand">
+                    <!-- Player cards will be dynamically added here -->
+                </div>
+                <div class="player-actions">
+                    <button id="uno-button" class="uno-btn hidden">UNO!</button>
+                    <button id="pass-turn" class="pass-btn hidden">Pass Turn</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Game Status -->
+        <div class="game-status" id="game-status">
+            <p>Game started! Play a card that matches the color or number.</p>
+        </div>
+
+        <!-- Game Over Modal -->
+        <div class="modal hidden" id="game-over-modal">
+            <div class="modal-content">
+                <h2 id="game-result">Game Over!</h2>
+                <p id="game-message">You won! 🎉</p>
+                <button id="new-game-btn" class="btn-primary">New Game</button>
+            </div>
+        </div>
+
+        <!-- Game Controls -->
+        <div class="game-controls">
+            <button id="new-game" class="btn-secondary">New Game</button>
+            <button id="rules-btn" class="btn-secondary">Rules</button>
+        </div>
+
+        <!-- Rules Modal -->
+        <div class="modal hidden" id="rules-modal">
+            <div class="modal-content">
+                <span class="close" id="close-rules">&times;</span>
+                <h2>UNO Rules</h2>
+                <div class="rules-content">
+                    <h3>Objective:</h3>
+                    <p>Be the first player to get rid of all your cards.</p>
+                    
+                    <h3>How to Play:</h3>
+                    <ul>
+                        <li>Match the top card by color, number, or symbol</li>
+                        <li>If you can't play, draw a card from the deck</li>
+                        <li>Special cards have unique effects:</li>
+                    </ul>
+                    
+                    <h3>Special Cards:</h3>
+                    <ul>
+                        <li><strong>Skip:</strong> Next player loses their turn</li>
+                        <li><strong>Reverse:</strong> Changes direction of play</li>
+                        <li><strong>Draw Two:</strong> Next player draws 2 cards</li>
+                        <li><strong>Wild:</strong> Change the color</li>
+                        <li><strong>Wild Draw Four:</strong> Change color, next player draws 4</li>
+                    </ul>
+                    
+                    <h3>UNO Rule:</h3>
+                    <p>When you have only one card left, click "UNO!" or you'll draw 2 penalty cards!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
