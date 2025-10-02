@@ -139,18 +139,21 @@ class EnhancedChessGame extends ChessGame {
         
         // If it's AI's turn and game mode is human vs AI
         if (this.gameMode === 'human-vs-ai' && this.currentPlayer === 'black' && !this.gameOver) {
+            console.log('AI should move now! Game mode:', this.gameMode, 'Current player:', this.currentPlayer);
             this.updateGameStatus('Computer is thinking...');
             setTimeout(() => this.makeAIMove(), 1000);
         }
     }
     
     makeAIMove() {
+        console.log('makeAIMove called! aiThinking:', this.aiThinking, 'gameOver:', this.gameOver);
         if (this.aiThinking || this.gameOver) return;
         
         this.aiThinking = true;
         
         // Get all valid moves for AI (black) - using the working method from base class
         const possibleMoves = this.getAllValidMovesForColor('black');
+        console.log('AI found', possibleMoves.length, 'possible moves');
         
         if (possibleMoves.length > 0) {
             // Simple AI: choose a random move with slight preference for captures
