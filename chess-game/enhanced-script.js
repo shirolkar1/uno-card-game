@@ -131,7 +131,11 @@ class EnhancedChessGame extends ChessGame {
     
     // Override the switchTurn method to handle AI moves
     switchTurn() {
-        super.switchTurn();
+        // Switch the current player
+        this.currentPlayer = this.currentPlayer === 'white' ? 'black' : 'white';
+        
+        // Update the display
+        this.updateDisplay();
         
         // If it's AI's turn and game mode is human vs AI
         if (this.gameMode === 'human-vs-ai' && this.currentPlayer === 'black' && !this.gameOver) {
