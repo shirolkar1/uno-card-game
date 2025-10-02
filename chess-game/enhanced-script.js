@@ -148,19 +148,32 @@ class EnhancedChessGame extends ChessGame {
         if (this.aiThinking || this.gameOver) return;
         
         this.aiThinking = true;
-        const depth = this.aiDepth[this.aiDifficulty];
         
-        // Get best move using minimax algorithm
-        const bestMove = this.getBestMove(depth);
+        // Get all valid moves for AI (black) - using the working method from base class
+        const possibleMoves = this.getAllValidMovesForColor('black');
         
-        if (bestMove) {
-            // Animate AI thinking
-            this.playSound('ai-thinking');
+        if (possibleMoves.length > 0) {
+            // Simple AI: choose a random move with slight preference for captures
+            let bestMove = possibleMoves[0];
             
+            // Prefer captures
+            const captureMoves = possibleMoves.filter(move => {
+                const target = this.board[move.to.row][move.to.col];
+                return target && target.color === 'white';
+            });
+            
+            if (captureMoves.length > 0 && this.aiDifficulty !== 'easy') {
+                bestMove = captureMoves[Math.floor(Math.random() * captureMoves.length)];
+            } else {
+                // For easy mode or when no captures, pick randomly
+                bestMove = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+            }
+            
+            // Make the AI move
             setTimeout(() => {
                 this.makeMove(bestMove.from.row, bestMove.from.col, bestMove.to.row, bestMove.to.col);
-                this.playSound('move');
                 this.aiThinking = false;
+                this.updateGameStatus("Your turn!");
             }, 500);
         } else {
             this.aiThinking = false;
@@ -168,7 +181,7 @@ class EnhancedChessGame extends ChessGame {
     }
     
     getBestMove(depth) {
-        const possibleMoves = this.getAllValidMoves('black');
+        const possibleMoves = this.getAllValidMovesForColor('black');
         
         if (possibleMoves.length === 0) return null;
         
@@ -224,7 +237,7 @@ class EnhancedChessGame extends ChessGame {
             score = this.evaluatePosition();
         } else {
             // Minimax with alpha-beta pruning (simplified)
-            const opponentMoves = this.getAllValidMoves('white');
+            const opponentMoves = this.getAllValidMovesForColor('white');
             let minScore = Infinity;
             
             for (let opponentMove of opponentMoves.slice(0, 10)) { // Limit for performance
